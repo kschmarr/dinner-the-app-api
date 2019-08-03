@@ -1,0 +1,1 @@
+TRUNCATE dinner_meals;
