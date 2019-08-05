@@ -1,0 +1,1 @@
+{"message":"select * from \"dinner_meals\" - relation \"dinner_meals\" does not exist","level":"error"}
