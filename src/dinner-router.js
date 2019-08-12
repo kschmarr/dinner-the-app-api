@@ -2,23 +2,31 @@ const express = require("express");
 const xss = require("xss");
 const logger = require("./logger");
 const dinnerService = require("./dinner-service");
+const { requireAuth } = require("./middleware/basic-auth");
 
 const dinnerRouter = express.Router();
 const bodyParser = express.json();
 
 const serializeUser = user => ({
   name: xss(user.name),
-  userid: xss(user.userid)
+  userid: xss(user.userid),
+  token: xss(user.token),
+  meal_index: xss(user.meal_index),
+  short_index: xss(user.short_index),
+  medium_index: xss(user.medium_index),
+  long_index: xss(user.long_index)
 });
 
 const serializeMeal = meal => ({
-  name: xss(meal.name),
+  meal: xss(meal.meal),
   rotation: xss(meal.rotation),
-  userid: xss(meal.userid)
+  userid: xss(meal.userid),
+  date_last_eaten: xss(meal.date_last_eaten),
+  mealid: xss(meal.mealid)
 });
 
 dinnerRouter
-  .route("/main")
+  .route("/meals")
   .get((req, res, next) => {
     dinnerService
       .getAllMeals(req.app.get("db"))
@@ -28,7 +36,38 @@ dinnerRouter
       .catch(next);
   })
   .post(bodyParser, (req, res, next) => {
-    for (const field of ["name", "rotation"]) {
+    for (const field of ["meal", "rotation"]) {
+      if (!req.body[field]) {
+        logger.error(`${field} is required`);
+        return res.status(400).send(`'${field}' is required`);
+      }
+    }
+
+    const meal = req.body;
+
+    dinnerService
+      .insertMeal(req.app.get("db"), meal)
+      .then(meal => {
+        res
+          .status(201)
+          .location(`/meals/${meal.meal}`)
+          .json(meal[0]);
+      })
+      .catch(next);
+  });
+
+dinnerRouter
+  .route("/users")
+  .get((req, res, next) => {
+    dinnerService
+      .getAllUsers(req.app.get("db"))
+      .then(users => {
+        res.json(users.map(serializeUser));
+      })
+      .catch(next);
+  })
+  .post(bodyParser, (req, res, next) => {
+    for (const field of ["name", "password"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send(`'${field}' is required`);
@@ -37,63 +76,44 @@ dinnerRouter
 
     const { name } = req.body;
 
-    const newUser = { name };
-
     dinnerService
-      .insertUser(req.app.get("db"), newUser)
+      .insertUser(req.app.get("db"), user)
       .then(user => {
         res
           .status(201)
-          .location(`/users/${user.userid}`)
+          .location(`/users/${user.name}`)
           .json(user[0]);
       })
       .catch(next);
   });
+dinnerRouter.route("/users/:name").get((req, res, next) => {
+  const { name } = req.params;
 
-dinnerRouter
-  .route("/list")
-  .get((req, res, next) => {
-    dinnerService
-      .getAllMeals(req.app.get("db"))
-      .then(meals => {
-        res.json(meals.map(serializeMeal));
-      })
-      .catch(next);
-  })
-  .post(bodyParser, (req, res, next) => {
-    for (const field of ["name", "rotation", "userid"]) {
-      if (!req.body[field]) {
-        logger.error(`${field} is required`);
-        return res.status(400).send(`'${field}' is required`);
+  dinnerService
+    .getOneUser(req.app.get("db"), name)
+    .then(user => {
+      if (!user) {
+        logger.error(`User with name ${name} not found.`);
+        return res.status(404).json({
+          error: { message: `User Not Found` }
+        });
       }
-    }
-
-    const { name, rotation, userid } = req.body;
-
-    const newMeal = { name, rotation, userid };
-    dinnerService
-      .insertMeal(req.app.get("db"), newMeal)
-      .then(meal => {
-        logger.info(`Meal with id ${meal.mealid} created.`);
-        res
-          .status(201)
-          .location(`/meals/${meal.mealid}`)
-          .json(meal);
-      })
-      .catch(next);
-  });
+      res.json(serializeUser(user));
+    })
+    .catch(next);
+});
 
 dinnerRouter
-  .route("/edit-meal/:mealid")
+  .route("/edit-meal/:meal")
   .all((req, res, next) => {
-    const { mealid } = req.params;
+    const { meal } = req.params;
     dinnerService
-      .getOneMeal(req.app.get("db"), mealid)
+      .getOneMeal(req.app.get("db"), meal)
       .then(meal => {
         if (!meal) {
-          logger.error(`Meal with id ${mealid} not found.`);
+          logger.error(`Meal with name ${meal} not found.`);
           return res.status(404).json({
-            error: { message: `meal Not Found` }
+            error: { message: `Meal Not Found` }
           });
         }
         res.meal = meal;
@@ -105,7 +125,6 @@ dinnerRouter
     res.json(serializeMeal(res.meal));
   })
   .delete((req, res, next) => {
-    // TODO: update to use db
     const { mealid } = req.params;
 
     dinnerService
@@ -115,6 +134,44 @@ dinnerRouter
         res.status(200).json({ mealid: mealid });
       })
       .catch(next);
+  })
+  .patch(bodyParser, (req, res, next) => {
+    for (const field of ["meal", "rotation"]) {
+      if (!req.body[field]) {
+        logger.error(`${field} is required`);
+        return res.status(400).send(`'${field}' is required`);
+      }
+    }
+
+    const meal = req.body;
+
+    dinnerService
+      .updateMeal(req.app.get("db"), meal, [...meal])
+      .then(meal => {
+        res
+          .status(201)
+          .location(`/meals/${meal.meal}`)
+          .json(meal[0]);
+      })
+      .catch(next);
   });
+
+// async function checkMealExists(req, res, next) {
+//   try {
+//     const meal = await dinnerService.getById(
+//       req.app.get("db"),
+//       req.params.name
+//     );
+
+//     if (!meal)
+//       return res.status(404).json({
+//         error: `Meal doesn't exist`
+//       });
+
+//     res.meal = meal;
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
 
 module.exports = dinnerRouter;

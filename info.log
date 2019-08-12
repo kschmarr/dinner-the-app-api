@@ -1,1 +1,30 @@
 {"message":"select * from \"dinner_meals\" - relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"date_last_eaten is not defined","level":"error"}
+{"message":"date_last_eaten is not defined","level":"error"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"name\" = ? limit ?","level":"error"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"name\" = ? limit ?","level":"error"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"name\" = ? limit ?","level":"error"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"name\" = ? limit ?","level":"error"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"name\" = ? limit ?","level":"error"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"name\" = ? limit ?","level":"error"}
+{"message":"Undefined binding(s) detected when compiling SELECT query: select * from \"dinner_users\" where \"name\" = ?","level":"error"}
+{"message":"User with name kris not found.","level":"error"}
+{"message":"User with name Kris not found.","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"rotation is required","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"meal is required","level":"error"}

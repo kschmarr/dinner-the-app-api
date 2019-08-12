@@ -2,6 +2,11 @@ const dinnerService = {
   getAllMeals(knex) {
     return knex.select("*").from("dinner_meals");
   },
+  getById(knex, id) {
+    return knex("dinner_meals")
+      .where("name", name)
+      .first();
+  },
   updateMeal(knex, mealid, new_meal_fields) {
     return knex("dinner_meals")
       .where({ mealid })
@@ -30,6 +35,13 @@ const dinnerService = {
   },
   getAllUsers(knex) {
     return knex.select("*").from("dinner_users");
+  },
+  getOneUser(knex, name) {
+    return knex
+      .from("dinner_users")
+      .select("*")
+      .where("name", name)
+      .first();
   },
   insertUser(knex, newUser) {
     return knex

@@ -1,3 +1,18 @@
+BEGIN;
+
+TRUNCATE
+  dinner_meals,
+  dinner_users
+  RESTART IDENTITY CASCADE;
+
+INSERT INTO dinner_users (name, token, meal_index, short_index, medium_index, long_index)
+VALUES
+  ('kris', 'a3JpczpsdWNreQ==', 1, 1, 1, 1),
+  ('alex', 'YWxleDpzdHJvbmc=', 1, 1, 1, 1),
+  ('andy', 'YW5keTpzdHJldGNoeQ==', 4, 3, 2, 1)
+  ;
+
+
 INSERT INTO dinner_meals (meal, userid, rotation)
 VALUES
   ('Curry', '1', 'short' ),
@@ -36,3 +51,6 @@ VALUES
   ('Pancakes', '3', 'long' ),
   ('Fried Rice', '3', 'long' ),
   ('Eggplant Parmesan', '3', 'long' );
+
+
+COMMIT;
