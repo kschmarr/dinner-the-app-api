@@ -5,7 +5,7 @@ TRUNCATE
   dinner_users
   RESTART IDENTITY CASCADE;
 
-INSERT INTO dinner_users (name, token, meal_index, short_index, medium_index, long_index)
+INSERT INTO dinner_users (username, token, meal_index, short_index, medium_index, long_index)
 VALUES
   ('kris', 'a3JpczpsdWNreQ==', 1, 1, 1, 1),
   ('alex', 'YWxleDpzdHJvbmc=', 1, 1, 1, 1),
