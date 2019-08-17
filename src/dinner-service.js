@@ -10,21 +10,20 @@ const dinnerService = {
   updateMeal(knex, mealid, new_meal_fields) {
     return knex("dinner_meals")
       .where({ mealid })
-      .update(new_meal_fields);
+      .update(new_meal_fields)
+      .returning("*");
   },
   deleteMeal(knex, mealid) {
     return knex("dinner_meals")
       .where({ mealid })
-      .delete();
+      .del()
+      .returning("*");
   },
   insertMeal(knex, new_meal) {
     return knex
       .insert(new_meal)
       .into("dinner_meals")
-      .returning("*")
-      .then(rows => {
-        return rows;
-      });
+      .returning("*");
   },
   getOneMeal(knex, id) {
     return knex
@@ -36,11 +35,11 @@ const dinnerService = {
   getAllUsers(knex) {
     return knex.select("*").from("dinner_users");
   },
-  getOneUser(knex, name) {
+  getOneUser(knex, token) {
     return knex
       .from("dinner_users")
       .select("*")
-      .where("name", name)
+      .where({ token })
       .first();
   },
   insertUser(knex, newUser) {
@@ -52,10 +51,16 @@ const dinnerService = {
         return rows;
       });
   },
-  updateUser(knex, id, new_user_fields) {
+  updateUser(knex, userid, new_user_fields) {
     return knex("dinner_users")
-      .where({ id })
-      .update(new_user_fields);
+      .where({ userid })
+      .update(new_user_fields)
+      .returning("*");
+  },
+  deleteUser(knex, userid) {
+    return knex("dinner_users")
+      .where({ userid })
+      .del();
   }
 };
 

@@ -54,3 +54,82 @@
 {"message":"password is required","level":"error"}
 {"message":"insert into \"dinner_users\" (\"0\", \"1\", \"2\", \"3\", \"4\") values ($1, $2, $3, $4, $5) returning * - column \"0\" of relation \"dinner_users\" does not exist","level":"error"}
 {"message":"Cannot read property 'username' of undefined","level":"error"}
+{"message":"select * from \"dinner_meals\" where \"mealid\" = $1 limit $2 - invalid input syntax for integer: \"Curry\"","level":"error"}
+{"message":"update \"dinner_users\" set \"meal\" = $1, \"rotation\" = $2 where \"id\" = $3 - column \"id\" does not exist","level":"error"}
+{"message":"userid is not defined","level":"error"}
+{"message":"dinnerService.deleteUser is not a function","level":"error"}
+{"message":"delete from \"dinner_users\" where \"userid\" = $1 - update or delete on table \"dinner_users\" violates foreign key constraint \"dinner_meals_userid_fkey\" on table \"dinner_meals\"","level":"error"}
+{"message":"User with id 3 deleted.","level":"info"}
+{"message":"select * from \"dinner_users\" where \"userid\" = $1 limit $2 - invalid input syntax for integer: \"undefined\"","level":"error"}
+{"message":"select * from \"dinner_users\" where \"userid\" = $1 limit $2 - invalid input syntax for integer: \"undefined\"","level":"error"}
+{"message":"select * from \"dinner_users\" where \"userid\" = $1 limit $2 - invalid input syntax for integer: \"undefined\"","level":"error"}
+{"message":"select * from \"dinner_users\" where \"userid\" = $1 limit $2 - invalid input syntax for integer: \"undefined\"","level":"error"}
+{"message":"select * from \"dinner_users\" where \"userid\" = $1 limit $2 - invalid input syntax for integer: \"undefined\"","level":"error"}
+{"message":"user not found.","level":"error"}
+{"message":"user not found.","level":"error"}
+{"message":"insert into \"dinner_meals\" (\"meal\", \"rotation\", \"userid\") values ($1, $2, $3) returning * - insert or update on table \"dinner_meals\" violates foreign key constraint \"dinner_meals_userid_fkey\"","level":"error"}
+{"message":"Meal with id 10 deleted.","level":"info"}
+{"message":"Meal with id 3 deleted.","level":"info"}
+{"message":"Meal with id 6 deleted.","level":"info"}
+{"message":"Meal with id 12 deleted.","level":"info"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 46 deleted.","level":"info"}
+{"message":"Meal not found.","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 50 deleted.","level":"info"}
+{"message":"Meal not found.","level":"error"}
+{"message":"Meal with id 49 deleted.","level":"info"}
+{"message":"Meal with id 9 deleted.","level":"info"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 51 deleted.","level":"info"}
+{"message":"Meal with id 47 deleted.","level":"info"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 53 deleted.","level":"info"}
+{"message":"Meal with id 54 deleted.","level":"info"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 55 deleted.","level":"info"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 2 deleted.","level":"info"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"console.logger is not a function","level":"error"}
+{"message":"Meal with id 56 deleted.","level":"info"}
+{"message":"Undefined binding(s) detected when compiling FIRST query: select * from \"dinner_users\" where \"userid\" = ? limit ?","level":"error"}
+{"message":"Cannot read property 'username' of undefined","level":"error"}
+{"message":"Cannot read property 'username' of undefined","level":"error"}
+{"message":"Cannot read property 'username' of undefined","level":"error"}
+{"message":"Cannot read property 'username' of undefined","level":"error"}
+{"message":"Cannot read property 'username' of undefined","level":"error"}
+{"message":"user is not defined","level":"error"}

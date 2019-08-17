@@ -48,60 +48,16 @@ dinnerRouter
     dinnerService
       .insertMeal(req.app.get("db"), meal)
       .then(meal => {
+        // console.log(meal);
+        // console.log("posted meal");
         res
           .status(201)
           .location(`/meals/${meal.meal}`)
           .json(meal[0]);
       })
+
       .catch(next);
   });
-
-dinnerRouter
-  .route("/users")
-  .get((req, res, next) => {
-    dinnerService
-      .getAllUsers(req.app.get("db"))
-      .then(users => {
-        res.json(users.map(serializeUser));
-      })
-      .catch(next);
-  })
-  .post(bodyParser, (req, res, next) => {
-    for (const field of ["username", "token"]) {
-      if (!req.body[field]) {
-        logger.error(`${field} is required`);
-        return res.status(400).send(`'${field}' is required`);
-      }
-    }
-
-    const newUser = req.body;
-
-    dinnerService
-      .insertUser(req.app.get("db"), newUser)
-      .then(user => {
-        res
-          .status(201)
-          .location(`/users/${newUser.username}`)
-          .json(user[0]);
-      })
-      .catch(next);
-  });
-dinnerRouter.route("/users/:userid").get((req, res, next) => {
-  const { userid } = req.params;
-
-  dinnerService
-    .getOneUser(req.app.get("db"), userid)
-    .then(user => {
-      if (!user) {
-        logger.error(`User with userid ${userid} not found.`);
-        return res.status(404).json({
-          error: { message: `User Not Found` }
-        });
-      }
-      res.json(serializeUser(user));
-    })
-    .catch(next);
-});
 
 dinnerRouter
   .route("/edit-meal/:mealid")
@@ -129,7 +85,9 @@ dinnerRouter
 
     dinnerService
       .deleteMeal(req.app.get("db"), mealid)
-      .then(() => {
+
+      .then(meal => {
+        console.log(meal);
         logger.info(`Meal with id ${mealid} deleted.`);
         res.status(200).json({ mealid: mealid });
       })
@@ -139,7 +97,8 @@ dinnerRouter
     const { meal, rotation, date_last_eaten } = req.body;
     const { mealid } = req.params;
 
-    const mealToUpdate = { meal, rotation };
+    const mealToUpdate = { meal, rotation, date_last_eaten };
+    console.log("new meal info: ", mealToUpdate);
 
     const numberOfValues = Object.values(mealToUpdate).filter(Boolean).length;
     if (numberOfValues === 0)
@@ -150,9 +109,111 @@ dinnerRouter
       });
 
     dinnerService
-      .updateUser(req.app.get("db"), mealid, mealToUpdate)
-      .then(numRowsAffected => {
-        res.status(204).end();
+      .updateMeal(req.app.get("db"), mealid, mealToUpdate)
+      .then(e => {
+        res
+          .status(201)
+          .location(`/meals/${mealid}`)
+          .json(e[0]);
+      })
+      .catch(next);
+  });
+
+dinnerRouter
+  .route("/users")
+  .get((req, res, next) => {
+    dinnerService
+      .getAllUsers(req.app.get("db"))
+      .then(users => {
+        res.status(201).json(users);
+      })
+
+      .catch(next);
+  })
+  .post(bodyParser, (req, res, next) => {
+    for (const field of ["username", "token"]) {
+      if (!req.body[field]) {
+        logger.error(`${field} is required`);
+        return res.status(400).send(`'${field}' is required`);
+      }
+    }
+
+    const newUser = req.body;
+
+    dinnerService
+      .insertUser(req.app.get("db"), newUser)
+      .then(user => {
+        if (!user) {
+          logger.error(`user not found.`);
+          return res.status(404).json({
+            error: { message: `User Not Found` }
+          });
+        }
+        res
+          .status(201)
+          .location(`/users/${newUser.username}`)
+          .json(user[0]);
+      })
+      .catch(next);
+  });
+
+dinnerRouter
+  .route("/users/:userid")
+  .all((req, res, next) => {
+    const { username } = req.params;
+    dinnerService
+      .getOneUser(req.app.get("db"), token)
+      .then(user => {
+        if (!user) {
+          logger.error(`user not found.`);
+          return res.status(404).json({
+            error: { message: `User Not Found` }
+          });
+        }
+        console.log("res", res);
+
+        res.user = user;
+        console.log("user", user);
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res) => {
+    res.json(serializeUser(res.user));
+  })
+  .delete((req, res, next) => {
+    const { userid } = req.params;
+
+    dinnerService
+      .deleteUser(req.app.get("db"), userid)
+      .then(() => {
+        logger.info(`User with id ${userid} deleted.`);
+        res.status(200).json({ userid: userid });
+      })
+      .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    console.log(req);
+    const { meal_index, short_index, medium_index, long_index } = req.body;
+    const { userid } = req.params;
+
+    const userToUpdate = { meal_index, short_index, medium_index, long_index };
+    console.log(userToUpdate);
+    const numberOfValues = Object.values(userToUpdate).filter(Boolean).length;
+    if (numberOfValues === 0)
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain an change for either meal_index, short_index, medium_index, or long_index`
+        }
+      });
+
+    dinnerService
+      .updateUser(req.app.get("db"), userid, userToUpdate)
+      .then(e => {
+        res
+          .status(201)
+          .location(`/users/${userid}`)
+          .json(e[0]);
       })
       .catch(next);
   });
