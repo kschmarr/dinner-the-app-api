@@ -48,8 +48,6 @@ dinnerRouter
     dinnerService
       .insertMeal(req.app.get("db"), meal)
       .then(meal => {
-        // console.log(meal);
-        // console.log("posted meal");
         res
           .status(201)
           .location(`/meals/${meal.meal}`)
@@ -87,7 +85,6 @@ dinnerRouter
       .deleteMeal(req.app.get("db"), mealid)
 
       .then(meal => {
-        console.log(meal);
         logger.info(`Meal with id ${mealid} deleted.`);
         res.status(200).json({ mealid: mealid });
       })
@@ -98,7 +95,6 @@ dinnerRouter
     const { mealid } = req.params;
 
     const mealToUpdate = { meal, rotation, date_last_eaten };
-    console.log("new meal info: ", mealToUpdate);
 
     const numberOfValues = Object.values(mealToUpdate).filter(Boolean).length;
     if (numberOfValues === 0)
@@ -170,10 +166,8 @@ dinnerRouter
             error: { message: `User Not Found` }
           });
         }
-        console.log("res", res);
 
         res.user = user;
-        console.log("user", user);
         next();
       })
       .catch(next);
@@ -193,12 +187,10 @@ dinnerRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    console.log(req);
     const { meal_index, short_index, medium_index, long_index } = req.body;
     const { userid } = req.params;
 
     const userToUpdate = { meal_index, short_index, medium_index, long_index };
-    console.log(userToUpdate);
     const numberOfValues = Object.values(userToUpdate).filter(Boolean).length;
     if (numberOfValues === 0)
       return res.status(400).json({
