@@ -35,11 +35,11 @@ const dinnerService = {
   getAllUsers(knex) {
     return knex.select("*").from("dinner_users");
   },
-  getOneUser(knex, token) {
+  getOneUser(knex, userid) {
     return knex
       .from("dinner_users")
       .select("*")
-      .where({ token })
+      .where({ userid })
       .first();
   },
   insertUser(knex, newUser) {

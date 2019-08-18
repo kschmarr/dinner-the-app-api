@@ -133,3 +133,4 @@
 {"message":"Cannot read property 'username' of undefined","level":"error"}
 {"message":"Cannot read property 'username' of undefined","level":"error"}
 {"message":"user is not defined","level":"error"}
+{"message":"token is not defined","level":"error"}

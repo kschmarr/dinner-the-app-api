@@ -156,9 +156,9 @@ dinnerRouter
 dinnerRouter
   .route("/users/:userid")
   .all((req, res, next) => {
-    const { username } = req.params;
+    const { userid } = req.params;
     dinnerService
-      .getOneUser(req.app.get("db"), token)
+      .getOneUser(req.app.get("db"), userid)
       .then(user => {
         if (!user) {
           logger.error(`user not found.`);
