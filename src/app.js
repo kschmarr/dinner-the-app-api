@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
-// const validateBearerToken = require("./validate-bearer-token");
 const errorHandler = require("./error-handler");
 const dinnerRouter = require("./dinner-router");
 
@@ -17,7 +16,6 @@ app.use(
 );
 app.use(cors());
 app.use(helmet());
-// app.use(validateBearerToken)
 
 app.use("/", dinnerRouter);
 

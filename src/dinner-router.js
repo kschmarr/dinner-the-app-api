@@ -2,7 +2,6 @@ const express = require("express");
 const xss = require("xss");
 const logger = require("./logger");
 const dinnerService = require("./dinner-service");
-const { requireAuth } = require("./middleware/basic-auth");
 const jsonParser = express.json();
 const dinnerRouter = express.Router();
 const bodyParser = express.json();
@@ -209,23 +208,5 @@ dinnerRouter
       })
       .catch(next);
   });
-
-// async function checkMealExists(req, res, next) {
-//   try {
-//     const meal = await dinnerService.getById(
-//       req.app.get("db"),
-//       req.params.name
-//     );
-
-//     if (!meal)
-//       return res.status(404).json({
-//         error: `Meal doesn't exist`
-//       });
-
-//     res.meal = meal;
-//     next();
-//   } catch (error) {
-//     next(error);
-//   }
 
 module.exports = dinnerRouter;
