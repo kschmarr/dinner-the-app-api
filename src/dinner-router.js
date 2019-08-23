@@ -30,7 +30,7 @@ dinnerRouter
     dinnerService
       .getAllMeals(req.app.get("db"))
       .then(meals => {
-        res.json(meals.map(serializeMeal));
+        res.json(meals.map(serializeMeal)).status(200);
       })
       .catch(next);
   })
@@ -75,7 +75,7 @@ dinnerRouter
       .catch(next);
   })
   .get((req, res) => {
-    res.json(serializeMeal(res.meal));
+    res.json(serializeMeal(res.meal)).status(200);
   })
   .delete((req, res, next) => {
     const { mealid } = req.params;
