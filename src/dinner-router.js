@@ -4,7 +4,6 @@ const logger = require("./logger");
 const dinnerService = require("./dinner-service");
 const jsonParser = express.json();
 const dinnerRouter = express.Router();
-const bodyParser = express.json();
 
 const serializeUser = user => ({
   username: xss(user.username),
@@ -34,7 +33,7 @@ dinnerRouter
       })
       .catch(next);
   })
-  .post(bodyParser, (req, res, next) => {
+  .post(jsonParser, (req, res, next) => {
     for (const field of ["meal", "rotation"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
@@ -125,7 +124,7 @@ dinnerRouter
 
       .catch(next);
   })
-  .post(bodyParser, (req, res, next) => {
+  .post(jsonParser, (req, res, next) => {
     for (const field of ["username", "token"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
