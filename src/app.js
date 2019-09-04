@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const errorHandler = require("./error-handler");
 const dinnerRouter = require("./dinner-router");
+const dinnerService = require("./dinner-service");
 
 const app = express();
 

@@ -134,3 +134,11 @@
 {"message":"Cannot read property 'username' of undefined","level":"error"}
 {"message":"user is not defined","level":"error"}
 {"message":"token is not defined","level":"error"}
+{"message":"Cannot read property 'select' of undefined","level":"error"}
+{"message":"Cannot read property 'select' of undefined","level":"error"}
+{"message":"select * from \"dinner_meals\" - relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"select * from \"dinner_meals\" - relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"meal is required","level":"error"}
+{"message":"select * from \"dinner_meals\" - relation \"dinner_meals\" does not exist","level":"error"}
+{"message":"Unable to acquire a connection","level":"error"}
+{"message":"Unable to acquire a connection","level":"error"}
