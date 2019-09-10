@@ -3,5 +3,5 @@ CREATE TABLE dinner_meals (
     meal TEXT NOT NULL,
     rotation TEXT NOT NULL,
     userid INTEGER REFERENCES dinner_users(userid) ON DELETE CASCADE NOT NULL,
-    date_last_eaten DATE NOT NULL DEFAULT '0001-01-01'
+    date_last_eaten DATE NOT NULL DEFAULT '2001-01-01'
 );
